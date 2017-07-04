@@ -35,13 +35,13 @@ http://www.goinggo.net/2014/01/concurrency-goroutines-and-gomaxprocs.html
 [The Linux Scheduler: a Decade of Wasted Cores](http://www.ece.ubc.ca/~sasha/papers/eurosys16-final29.pdf)  
 [Explanation of the Scheduler](https://news.ycombinator.com/item?id=12460807)  
 [15 Years of Concurrency](http://joeduffyblog.com/2016/11/30/15-years-of-concurrency/) - Joe Duffy  
+[How does the golang scheduler work?](https://www.quora.com/How-does-the-golang-scheduler-work/answer/Ian-Lance-Taylor) - Ian Lance Taylor  
 
 ## Code Review
 
 [Goroutines and concurrency](example1/example1.go) ([Go Playground](https://play.golang.org/p/eV4l2JqLZL))  
 [Goroutine time slicing](example2/example2.go) ([Go Playground](https://play.golang.org/p/8NwVeZG6IB))  
 [Goroutines and parallelism](example3/example3.go) ([Go Playground](https://play.golang.org/p/5A0VFp03vb))  
-[Less is more](example4/example4_test.go) ([Go Playground](https://play.golang.org/p/KVATlp9xI1))
 
 ## Exercises
 

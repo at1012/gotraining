@@ -34,7 +34,7 @@ func main() {
 
 	// Create a new server and set timeout values.
 	server := http.Server{
-		Addr:           ":3000",
+		Addr:           "localhost:3000",
 		Handler:        http.HandlerFunc(app),
 		ReadTimeout:    5 * time.Second,
 		WriteTimeout:   10 * time.Second,
@@ -47,13 +47,14 @@ func main() {
 
 	// Start the listener.
 	go func() {
-		log.Println("listener : Listening on :3000")
+		log.Println("listener : Listening on localhost:3000")
 		log.Println("listener :", server.ListenAndServe())
 		wg.Done()
 	}()
 
-	// Listen for an interrupt signal from the OS.
-	osSignals := make(chan os.Signal)
+	// Listen for an interrupt signal from the OS. Use a buffered
+	// channel because of how the signal package is implemented.
+	osSignals := make(chan os.Signal, 1)
 	signal.Notify(osSignals, os.Interrupt)
 
 	// Wait for a signal to shutdown.

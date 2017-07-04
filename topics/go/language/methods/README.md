@@ -1,6 +1,6 @@
 ## Methods
 
-Methods are functions that are declared with a receiver which binds the method to a type. Methods and can be used to operate on values or pointers of that type.
+Methods are functions that are declared with a receiver which binds the method to a type. Methods can be used to operate on values or pointers of that type.
 
 ## Notes
 
@@ -21,8 +21,8 @@ http://www.goinggo.net/2014/05/methods-interfaces-and-embedded-types.html
 
 ## Code Review
 
-[Declare and receiver behavior](example1/example1.go) ([Go Playground](https://play.golang.org/p/nxAwTRWk4N))  
-[Value and Pointer semantics](example5/example5.go) ([Go Playground](https://play.golang.org/p/vyWTRDs9bi))  
+[Declare and receiver behavior](example1/example1.go) ([Go Playground](https://play.golang.org/p/-outqMAJRD))  
+[Value and Pointer semantics](example5/example5.go) ([Go Playground](https://play.golang.org/p/cyXulaDNL9))  
 [Named typed methods](example2/example2.go) ([Go Playground](https://play.golang.org/p/9WeR1rShIa))  
 [Function/Method variables](example3/example3.go) ([Go Playground](https://play.golang.org/p/Ewhk87BiWA))  
 [Function Types](example4/example4.go) ([Go Playground](https://play.golang.org/p/EZQPrC9qsx))

@@ -14,7 +14,6 @@ import (
 	"github.com/dimfeld/httptreemux"
 	"github.com/pborman/uuid"
 	"gopkg.in/go-playground/validator.v8"
-	"gopkg.in/mgo.v2"
 )
 
 // TraceIDHeader is the header added to outgoing requests which adds the
@@ -53,7 +52,6 @@ const KeyValues ctxKey = 1
 
 // Values represent state for each request.
 type Values struct {
-	DB         *mgo.Session
 	TraceID    string
 	Now        time.Time
 	StatusCode int
@@ -72,8 +70,6 @@ type Middleware func(Handler) Handler
 // data/logic on this App struct
 type App struct {
 	*httptreemux.TreeMux
-	Values map[string]interface{}
-
 	mw []Middleware
 }
 
@@ -83,7 +79,6 @@ type App struct {
 func New(mw ...Middleware) *App {
 	return &App{
 		TreeMux: httptreemux.New(),
-		Values:  make(map[string]interface{}),
 		mw:      mw,
 	}
 }
@@ -116,17 +111,13 @@ func (a *App) Handle(verb, path string, handler Handler, mw ...Middleware) {
 	// The function to execute for each request.
 	h := func(w http.ResponseWriter, r *http.Request, params map[string]string) {
 
-		// Create the context for the request.
-		ctx, cancel := context.WithCancel(context.Background())
-		defer cancel()
-
 		// Set the context with the required values to
 		// process the request.
 		v := Values{
 			TraceID: uuid.New(),
 			Now:     time.Now(),
 		}
-		ctx = context.WithValue(ctx, KeyValues, &v)
+		ctx := context.WithValue(r.Context(), KeyValues, &v)
 
 		// Set the trace id on the outgoing requests before any other header to
 		// ensure that the trace id is ALWAYS added to the request regardless of

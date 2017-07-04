@@ -29,7 +29,16 @@ func App() http.Handler {
 	// Redirect requests from `/`` to `/customers`.
 	r.Handle("/", http.RedirectHandler("/customers", http.StatusMovedPermanently))
 
-	return r
+	return contentType(r)
+}
+
+// contentType is middleware that adds an application/json Content-Type header
+// to all outgoing responses.
+func contentType(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+		res.Header().Add("Content-Type", "application/json")
+		h.ServeHTTP(res, req)
+	})
 }
 
 // indexHandler returns the entire list of customers in the DB.
@@ -104,5 +113,6 @@ func main() {
 
 	// Start the http server to handle the request for
 	// both versions of the API.
-	log.Fatal(http.ListenAndServe(":3000", App()))
+	log.Print("Listening on localhost:3000")
+	log.Fatal(http.ListenAndServe("localhost:3000", App()))
 }

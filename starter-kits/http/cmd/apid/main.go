@@ -14,7 +14,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ardanlabs/gotraining/starter-kits/http/cmd/apid/routes"
+	"github.com/ardanlabs/gotraining/starter-kits/http/cmd/apid/handlers"
+	"github.com/ardanlabs/gotraining/starter-kits/http/internal/platform/db"
 )
 
 // init is called before main. We are using init to customize logging output.
@@ -27,6 +28,20 @@ func main() {
 	log.Println("main : Started")
 
 	// Check the environment for a configured port value.
+	dbHost := os.Getenv("DB_HOST")
+	if dbHost == "" {
+		dbHost = "got:got2015@ds039441.mongolab.com:39441/gotraining"
+	}
+
+	// Register the Master Session for the database.
+	log.Println("main : Started : Capturing Master DB...")
+	masterDB, err := db.NewMGO(dbHost, 25*time.Second)
+	if err != nil {
+		log.Fatalf("startup : Register DB : %v", err)
+	}
+	defer masterDB.MGOClose()
+
+	// Check the environment for a configured port value.
 	host := os.Getenv("HOST")
 	if host == "" {
 		host = ":3000"
@@ -35,7 +50,7 @@ func main() {
 	// Create a new server and set timeout values.
 	server := http.Server{
 		Addr:           host,
-		Handler:        routes.API(),
+		Handler:        handlers.API(masterDB),
 		ReadTimeout:    5 * time.Second,
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
@@ -47,13 +62,13 @@ func main() {
 
 	// Start the listener.
 	go func() {
-		log.Printf("startup : Listening : %s", host)
+		log.Printf("startup : Listening %s", host)
 		log.Printf("shutdown : Listener closed : %v", server.ListenAndServe())
 		wg.Done()
 	}()
 
 	// Listen for an interrupt signal from the OS.
-	osSignals := make(chan os.Signal)
+	osSignals := make(chan os.Signal, 1)
 	signal.Notify(osSignals, os.Interrupt)
 
 	// Wait for a signal to shutdown.

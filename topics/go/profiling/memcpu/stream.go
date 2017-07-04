@@ -35,42 +35,58 @@ var data = []struct {
 	{[]byte("elvielviselvis"), []byte("elviElvisElvis")},
 }
 
-// Declare what needs to be found and its replacement.
-var find = []byte("elvis")
-var repl = []byte("Elvis")
+// assembleInputStream combines all the input into a
+// single stream for processing.
+func assembleInputStream() []byte {
+	var in []byte
+	for _, d := range data {
+		in = append(in, d.input...)
+	}
+	return in
+}
 
-// Calculate the number of bytes we need to locate.
-var size = len(find)
+// assembleOutputStream combines all the output into a
+// single stream for comparing.
+func assembleOutputStream() []byte {
+	var out []byte
+	for _, d := range data {
+		out = append(out, d.output...)
+	}
+	return out
+}
 
 func main() {
 	var output bytes.Buffer
+	in := assembleInputStream()
+	out := assembleOutputStream()
+
+	find := []byte("elvis")
+	repl := []byte("Elvis")
 
 	fmt.Println("=======================================\nRunning Algorithm One")
-	for _, d := range data {
-		output.Reset()
-		algOne(d.input, &output)
-		matched := bytes.Compare(d.output, output.Bytes())
-		fmt.Printf("Matched: %v Inp: [%s] Exp: [%s] Got: [%s]\n", matched == 0, d.input, d.output, output.Bytes())
-	}
+	output.Reset()
+	algOne(in, find, repl, &output)
+	matched := bytes.Compare(out, output.Bytes())
+	fmt.Printf("Matched: %v\nInp: [%s]\nExp: [%s]\nGot: [%s]\n", matched == 0, in, out, output.Bytes())
 
 	fmt.Println("=======================================\nRunning Algorithm Two")
-	for _, d := range data {
-		output.Reset()
-		algTwo(d.input, &output)
-		matched := bytes.Compare(d.output, output.Bytes())
-		fmt.Printf("Matched: %v Inp: [%s] Exp: [%s] Got: [%s]\n", matched == 0, d.input, d.output, output.Bytes())
-	}
+	output.Reset()
+	algTwo(in, find, repl, &output)
+	matched = bytes.Compare(out, output.Bytes())
+	fmt.Printf("Matched: %v\nInp: [%s]\nExp: [%s]\nGot: [%s]\n", matched == 0, in, out, output.Bytes())
 }
 
 // algOne is one way to solve the problem.
-func algOne(data []byte, output *bytes.Buffer) {
+func algOne(data []byte, find []byte, repl []byte, output *bytes.Buffer) {
 
 	// Use a bytes Buffer to provide a stream to process.
 	input := bytes.NewBuffer(data)
 
+	// The number of bytes we are looking for.
+	size := len(find)
+
 	// Declare the buffers we need to process the stream.
 	buf := make([]byte, size)
-	tmp := make([]byte, 1)
 	end := size - 1
 
 	// Read in an initial number of bytes we need to get started.
@@ -82,42 +98,43 @@ func algOne(data []byte, output *bytes.Buffer) {
 	for {
 
 		// Read in one byte from the input stream.
-		n, err := io.ReadFull(input, tmp)
-
-		// If we have a byte then process it.
-		if n == 1 {
-
-			// Add this byte to the end of the buffer.
-			buf[end] = tmp[0]
-
-			// If we have a match, replace the bytes.
-			if bytes.Compare(buf, find) == 0 {
-				copy(buf, repl)
-			}
-
-			// Write the front byte since it has been compared.
-			output.WriteByte(buf[0])
-
-			// Slice that front byte out.
-			copy(buf, buf[1:])
-		}
-
-		// Did we hit the end of the stream, then we are done.
-		if err != nil {
+		if _, err := io.ReadFull(input, buf[end:]); err != nil {
 
 			// Flush the reset of the bytes we have.
 			output.Write(buf[:end])
-			break
+			return
 		}
+
+		// If we have a match, replace the bytes.
+		if bytes.Compare(buf, find) == 0 {
+			output.Write(repl)
+
+			// Read a new initial number of bytes.
+			if n, err := io.ReadFull(input, buf[:end]); err != nil {
+				output.Write(buf[:n])
+				return
+			}
+
+			continue
+		}
+
+		// Write the front byte since it has been compared.
+		output.WriteByte(buf[0])
+
+		// Slice that front byte out.
+		copy(buf, buf[1:])
 	}
 }
 
 // algTwo is a second way to solve the problem.
 // Provided by Tyler Bunnell https://twitter.com/TylerJBunnell
-func algTwo(data []byte, output *bytes.Buffer) {
+func algTwo(data []byte, find []byte, repl []byte, output *bytes.Buffer) {
 
 	// Use the bytes Reader to provide a stream to process.
 	input := bytes.NewReader(data)
+
+	// The number of bytes we are looking for.
+	size := len(find)
 
 	// Create an index variable to match bytes.
 	idx := 0

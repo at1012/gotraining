@@ -32,8 +32,8 @@ http://golang.org/doc/effective_go.html#embedding
 
 #### Grouping Types
 
-[Grouping By State](grouping/example1/example1.go) ([Go Playground](https://play.golang.org/p/iwci4dKqLW))  
-[Grouping By Behavior](grouping/example2/example2.go) ([Go Playground](https://play.golang.org/p/mnJMHPew08))  
+[Grouping By State](grouping/example1/example1.go) ([Go Playground](https://play.golang.org/p/r6to0aMm6I))  
+[Grouping By Behavior](grouping/example2/example2.go) ([Go Playground](https://play.golang.org/p/yOj1zJCRlj))  
 
 #### Decoupling
 
@@ -41,11 +41,12 @@ http://golang.org/doc/effective_go.html#embedding
 [Decoupling With Interface](decoupling/example2/example2.go) ([Go Playground](https://play.golang.org/p/EnzMrT7Fdo))  
 [Interface Composition](decoupling/example3/example3.go) ([Go Playground](https://play.golang.org/p/ES4BOnDX6O))  
 [Decoupling With Interface Composition](decoupling/example4/example4.go) ([Go Playground](https://play.golang.org/p/ufFSFxCdEs))  
+[Remove Interface Pollution](decoupling/example5/example5.go) ([Go Playground](https://play.golang.org/p/a8C4KM9AU2))  
 
 #### Conversion and Assertions
 
-[Interface Conversions](assertions/example1/example1.go) ([Go Playground](https://play.golang.org/p/u5Jrk9wSWW))  
-[Runtime Type Assertions](assertions/example2/example2.go) ([Go Playground](https://play.golang.org/p/tr-RGBxES-))
+[Interface Conversions](assertions/example1/example1.go) ([Go Playground](https://play.golang.org/p/GVLf2sZcA1))  
+[Runtime Type Assertions](assertions/example2/example2.go) ([Go Playground](https://play.golang.org/p/awq1LSTwXV))
 
 #### Interface Pollution
 

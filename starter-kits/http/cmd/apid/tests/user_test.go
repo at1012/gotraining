@@ -11,10 +11,12 @@ import (
 	"net/http/httptest"
 	"os"
 	"testing"
+	"time"
 
 	"strings"
 
-	"github.com/ardanlabs/gotraining/starter-kits/http/cmd/apid/routes"
+	"github.com/ardanlabs/gotraining/starter-kits/http/cmd/apid/handlers"
+	"github.com/ardanlabs/gotraining/starter-kits/http/internal/platform/db"
 	"github.com/ardanlabs/gotraining/starter-kits/http/internal/platform/web"
 	"github.com/ardanlabs/gotraining/starter-kits/http/internal/user"
 	"gopkg.in/mgo.v2/bson"
@@ -31,6 +33,11 @@ const (
 // The web application state for tests
 var a *web.App
 
+// init is called before main. We are using init to customize logging output.
+func init() {
+	log.SetFlags(log.LstdFlags | log.Lmicroseconds | log.Lshortfile)
+}
+
 // TestMain gives you a chance to setup / tear down before tests in this package.
 func TestMain(m *testing.M) {
 	os.Exit(runTest(m))
@@ -39,8 +46,23 @@ func TestMain(m *testing.M) {
 // runTest initializes the environment for the tests and allows for
 // the proper return code if the test fails or succeeds.
 func runTest(m *testing.M) int {
+
+	// Check the environment for a configured port value.
+	dbHost := os.Getenv("DB_HOST")
+	if dbHost == "" {
+		dbHost = "got:got2015@ds039441.mongolab.com:39441/gotraining"
+	}
+
+	// Register the Master Session for the database.
+	log.Println("main : Started : Capturing Master DB...")
+	masterDB, err := db.NewMGO(dbHost, 25*time.Second)
+	if err != nil {
+		return 1
+	}
+	defer masterDB.MGOClose()
+
 	log.SetFlags(log.LstdFlags | log.Lmicroseconds | log.Lshortfile)
-	a = routes.API().(*web.App)
+	a = handlers.API(masterDB).(*web.App)
 
 	return m.Run()
 }
@@ -175,7 +197,7 @@ func getUser400(t *testing.T) {
 
 			recv := w.Body.String()
 			resp := `{
-  "error": "bson.IsObjectIdHex: 12345: ID is not in it's proper form"
+  "error": "ID is not in it's proper form"
 }`
 			if resp != recv {
 				t.Log("Got :", recv)

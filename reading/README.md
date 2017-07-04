@@ -60,6 +60,8 @@ There is a ton of links to extra reading and videos through out the material. Oc
 [Structuring Applications in Go](https://medium.com/@benbjohnson/structuring-applications-in-go-3b04be4ff091#.xc85lg2kf) - Ben Johnson  
 [Advanced Testing with Go - Video](https://www.youtube.com/shared?ci=LARb45o5TpA) - Mitchell Hashimoto  
 [Advanced Testing with Go - Deck](https://speakerdeck.com/mitchellh/advanced-testing-with-go) - Mitchell Hashimoto  
+[The tragedy of 100% code coverage](http://labs.ig.com/code-coverage-100-percent-tragedy) - Daniel Lebrero's  
+[Logs and Metrics](https://medium.com/@cindysridharan/logs-and-metrics-6d34d3026e38) - Cindy Sridharan  
 
 ### Vendoring / Versioning
 
@@ -80,6 +82,8 @@ There is a ton of links to extra reading and videos through out the material. Oc
 [Go's execution tracer](http://www.thedotpost.com/2016/10/rhys-hiltner-go-execution-tracer) - Rhys Hiltner  
 [Using Instruments to profile Go programs](https://rakyll.org/instruments) - Burcu Dogan  
 [Designing for Performance](https://www.youtube.com/watch?v=03GsLxVdVzU&feature=youtu.be) - Martin Thompson  
+[Fighting latency: the CPU profiler is not your ally](https://www.youtube.com/watch?v=nsM_m4hZ-bA&t=973s) - Filippo Valsorda  
+[go tool trace](https://making.pusher.com/go-tool-trace/) - Will Sewell  
 
 ### Interfaces and Composition
 
@@ -117,6 +121,7 @@ There is a ton of links to extra reading and videos through out the material. Oc
 [Notes on Distributed Systems for Young Bloods](https://www.somethingsimilar.com/2013/01/14/notes-on-distributed-systems-for-young-bloods) - Jeff Hodges  
 [The Queen Does Not Rule](https://aeon.co/essays/how-ant-societies-point-to-radical-possibilities-for-humans) - Deborah M Gordon  
 [Load Balancing is Impossible](https://www.youtube.com/watch?v=kpvbOzHUakA) - Tyler McMullen  
+[Dapper: Distributed Tracing](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/36356.pdf) - Google  
 
 ### HTTP and Timeouts
 
@@ -134,6 +139,7 @@ There is a ton of links to extra reading and videos through out the material. Oc
 [Latency Tip Of The Day](http://latencytipoftheday.blogspot.com/) -- Gil Tene  
 [Proposal: Monotonic Elapsed Time Measurements in Go](https://github.com/golang/proposal/blob/master/design/12914-monotonic.md) - Russ Cox  
 [Exploring shared objects in Go](https://blog.ksub.org/bytes/2017/02/12/exploring-shared-objects-in-go/) - Marcelo Bytes  
+[Evaluation of read-only slices](https://docs.google.com/document/d/1-NzIYu0qnnsshMBpMPmuO21qd8unlimHgKjRD9qwp2A/edit) - Russ Cox  
 
 ## Mechanical Sympathy
 
@@ -196,7 +202,8 @@ This content can be found under [pointers](../topics/go/language/pointers). We f
 [Go GC: Solving the Latency Problem](https://www.youtube.com/watch?v=aiv1JOfMjm0&index=16&list=PL2ntRZ1ySWBf-_z-gHCOR2N156Nw930Hm) - Rick Hudson  
 [Concurrent garbage collection](http://rubinius.com/2013/06/22/concurrent-garbage-collection)  
 [Go 1.5 concurrent garbage collector pacing](https://docs.google.com/document/d/1wmjrocXIWTr1JxU-3EQBI6BK6KgtiFArkG47XK73xIQ/edit)  
-[Eliminating Stack Re-Scanning](https://github.com/golang/proposal/blob/master/design/17503-eliminate-rescan.md)
+[Eliminating Stack Re-Scanning](https://github.com/golang/proposal/blob/master/design/17503-eliminate-rescan.md)  
+[Why golang garbage-collector not implement Generational and Compact gc?](https://groups.google.com/forum/m/#!topic/golang-nuts/KJiyv2mV2pU) - Ian Lance Taylor  
 
 #### Single Static Assignment Optimizations
 
@@ -208,6 +215,7 @@ https://godoc.org/golang.org/x/tools/go/ssa
 #### Misc
 
 [Runtime Hacking](https://github.com/golang/go/blob/master/src/runtime/HACKING.md)  
+[How does the golang scheduler work?](https://www.quora.com/How-does-the-golang-scheduler-work/answer/Ian-Lance-Taylor) - Ian Lance Taylor  
 
 ## Hardware
 

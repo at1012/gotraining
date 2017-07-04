@@ -74,12 +74,13 @@ If the GC begins to believe that it can’t finish the collection within the dec
 ### Pointer Mechanics
 
 https://golang.org/doc/effective_go.html#pointers_vs_values  
+https://www.goinggo.net/2017/05/language-mechanics-on-stacks-and-pointers.html  
+http://www.goinggo.net/2014/12/using-pointers-in-go.html  
 http://www.goinggo.net/2013/07/understanding-pointers-and-memory.html  
-http://www.goinggo.net/2014/12/using-pointers-in-go.html
 
 ### Stacks
 
-[Contiguous Stack Proposal](https://docs.google.com/document/d/1wAaf1rYoM4S4gtnPh0zOlGzWtrZFQ5suE8qr2sD8uWQ/pub)
+[Contiguous Stack Proposal](https://docs.google.com/document/d/1wAaf1rYoM4S4gtnPh0zOlGzWtrZFQ5suE8qr2sD8uWQ/pub)  
 
 ### Escape Analysis and Inlining
 
@@ -94,7 +95,8 @@ http://www.goinggo.net/2014/12/using-pointers-in-go.html
 [Go GC: Solving the Latency Problem](https://www.youtube.com/watch?v=aiv1JOfMjm0&index=16&list=PL2ntRZ1ySWBf-_z-gHCOR2N156Nw930Hm)  
 [Concurrent garbage collection](http://rubinius.com/2013/06/22/concurrent-garbage-collection)  
 [Go 1.5 concurrent garbage collector pacing](https://docs.google.com/document/d/1wmjrocXIWTr1JxU-3EQBI6BK6KgtiFArkG47XK73xIQ/edit)  
-[Eliminating Stack Re-Scanning](https://github.com/golang/proposal/blob/master/design/17503-eliminate-rescan.md)
+[Eliminating Stack Re-Scanning](https://github.com/golang/proposal/blob/master/design/17503-eliminate-rescan.md)  
+[Why golang garbage-collector not implement Generational and Compact gc?](https://groups.google.com/forum/m/#!topic/golang-nuts/KJiyv2mV2pU) - Ian Lance Taylor  
 
 ### Static Single Assignment Optimizations
 
@@ -108,10 +110,10 @@ https://godoc.org/golang.org/x/tools/go/ssa
 
 ## Code Review
 
-[Pass by Value](example1/example1.go) ([Go Playground](https://play.golang.org/p/kEy5gesvMo))  
-[Sharing data I](example2/example2.go) ([Go Playground](https://play.golang.org/p/iJ5k0BFYXB))  
+[Pass by Value](example1/example1.go) ([Go Playground](https://play.golang.org/p/JJMHWiZ9h9))  
+[Sharing data I](example2/example2.go) ([Go Playground](https://play.golang.org/p/y_FHIdUbAw))  
 [Sharing data II](example3/example3.go) ([Go Playground](https://play.golang.org/p/KRKrUCcTYe))  
-[Stack vs Heap](example4/example4.go) ([Go Playground](https://play.golang.org/p/jYkpV-zQ_o))  
+[Escape Analysis](example4/example4.go) ([Go Playground](https://play.golang.org/p/VoQBQk8ijj))  
 [Stack grow](example5/example5.go) ([Go Playground](https://play.golang.org/p/tpDOwBCvqW))  
 
 ## Exercises

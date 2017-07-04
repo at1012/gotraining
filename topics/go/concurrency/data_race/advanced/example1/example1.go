@@ -6,7 +6,11 @@
 // a partial write.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"sync"
+)
 
 // Speaker allows for speaking behavior.
 type Speaker interface {
@@ -55,26 +59,30 @@ func main() {
 	person := Speaker(&ben)
 
 	// Have a goroutine constantly assign the pointer of
-	// the Ben value to the interface.
+	// the Ben value to the interface and then Speak.
 	go func() {
 		for {
 			person = &ben
+			if !person.Speak() {
+				os.Exit(1)
+			}
 		}
 	}()
 
 	// Have a goroutine constantly assign the pointer of
-	// the Jerry value to the interface.
+	// the Jerry value to the interface and then Speak.
 	go func() {
 		for {
 			person = &jerry
+			if !person.Speak() {
+				os.Exit(1)
+			}
 		}
 	}()
 
-	// Keep calling the Speak method against the interface
-	// value until we have a race condition.
-	for {
-		if !person.Speak() {
-			break
-		}
-	}
+	// Just hold main from returning. The data race will
+	// cause the program to exit.
+	var wg sync.WaitGroup
+	wg.Add(1)
+	wg.Wait()
 }

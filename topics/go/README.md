@@ -1,10 +1,12 @@
 ## Ultimate Go
 
-This is material for any intermediate-level developer who has some experience with other programming languages and wants to learn Go. We believe these classes are perfect for anyone who wants a jump start in learning Go or who wants a more thorough understanding of the language and its internals.
+This is material for any intermediate-level developer who has at least a few months to years of experience writing code in Go. This class provides a very deep knowledge of the programming language with a big push on language mechanics, design philosophies and guidelines. We focus on teaching how to write code with a priority on consistency, integrity, readability and simplicity. We cover a lot about “if performance matters” with a focus on mechanical sympathy, data oriented design, decoupling and writing production software. We close the class with benchmarking, profiling, tracing and debugging. If you want your team to be better Go developers, code reviewers, designers and architects, this is the class they need.
 
 [Ultimate Go](../courses/go/README.md)
 
 ## Design Guidelines
+ 
+_"An architecture isn't a set of pieces, it's a set of rules about what you can expect of them." - Michael Feathers_
 
 You must develop a design philosophy that establishes a set of guidelines. This is more important than developing a set of rules or patterns you apply blindly. Guidelines help to formulate, drive and validate decisions. You can't begin to make the best decisions without understanding the impact of your decisions. Every decision you make, every line of code you write comes with trade-offs.
 
@@ -40,6 +42,16 @@ You must develop a design philosophy that establishes a set of guidelines. This 
 **Open Your Mind**  
 * Technology changes quickly but people's minds change slowly.
 * Easy to adopt new technology but hard to adopt new ways of thinking.
+
+---
+
+### Legacy Software
+
+Do you care about the legacy you are leaving behind?
+
+_"There are two kinds of software projects: those that fail, and those that turn into legacy horrors." - Peter Weinberger (inventor of AWK)_
+
+_"Legacy software is an unappreciated but serious problem. Legacy code may be the downfall of our civilization." - Chuck Moore (inventor of Forth)_
 
 ---
 
@@ -79,13 +91,11 @@ _"The correctness of the implementation is the most important concern, but there
 
 _"The basic ideas of good style, which are fundamental to write clearly and simply, are just as important now as they were 35 years ago. Simple, straightforward code is just plain easier to work with and less likely to have problems. As programs get bigger and more complicated, it's even more important to have clean, simple code." - Brian Kernighan_
 
-_"Unless the developer has a really good idea of what the software is going to be used for, there's a very high probablility that the software will turn out badly. If the developers don't know and understand the application well, then it's crucial to get as much user input and experience as possible." - Brian Kernighan_
+_"Unless the developer has a really good idea of what the software is going to be used for, there's a very high probability that the software will turn out badly. If the developers don't know and understand the application well, then it's crucial to get as much user input and experience as possible." - Brian Kernighan_
 
 _"The hardest bugs are those where your mental model of the situation is just wrong, so you can't see the problem at all" - Brian Kernighan_
 
-_"There are two kinds of software projects: those that fail, and those that turn into legacy horrors." - Peter Weinberger (inventor of AWK)_
-
-_"Legacy software is an unappreciated but serious problem. Legacy code may be the downfall of our civilization." - Chuck Moore (inventor of Forth)_
+_"Everyone knows that debugging is twice as hard as writing a program in the first place. So if you're as clever as you can be when you write it, how will you ever debug it?" - Brian Kernighan_
 
 **Resources:**
 
@@ -97,15 +107,27 @@ _"Legacy software is an unappreciated but serious problem. Legacy code may be th
 
 You can't look at a piece of code, function or algorithm and determine if it smells good or bad without a design philosophy. These four major categories are the basis for code reviews and should be prioritized in this order: Integrity, Readability, Simplicity and then Performance. You must consciously and with great reason be able to explain the category you are choosing.
 
-**_Note: There are exceptions to everything but when you are not sure an exception applies, follow the guidelines presented the best you can._** 
+_"The software business is one of the few places we teach people to write before we teach them to read". - Tom Love (inventor of Objective C)_
 
-#### 1) Integrity
+---
+
+### Integrity
 
 **_We need to become very serious about reliability._**
 
 There are two driving forces behind integrity:  
 * Integrity is about every allocation, read and write of memory being accurate, consistent and efficient. The type system is critical to making sure we have this `micro` level of integrity.
 * Integrity is about every data transformation being accurate, consistent and efficient. Writing less code and error handling is critical to making sure we have this `macro` level of integrity.
+
+**Write Less Code:**
+
+There have been studies that have researched the number of bugs you can expect to have in your software. The industry average is around 15 to 50 bugs per 1000 lines of code. One simple way to reduce the number of bugs, and increase the integrity of your software, is to write less code.
+
+Bjarne Stroustrup stated that writing more code than you need results in `Ugly`, `Large` and `Slow` code:
+
+* `Ugly`: Leaves places for bugs to hide.
+* `Large`: Ensures incomplete tests.
+* `Slow`: Encourages the use of shortcuts and dirty tricks.
 
 **Error Handling:**
 
@@ -124,7 +146,7 @@ When error handling is treated as an exception and not part of the main code, yo
 
 **Ignorance vs Carelessness:**
 
-Anytime we identify an integrity issue we need to ask ourselves why it happened. 
+Anytime we identify an integrity issue we need to ask ourselves why it happened.
 ```
                     Not Deliberate               Deliberate
               ------------------------------------------------------
@@ -141,17 +163,6 @@ Carelessness  |        Education         |   Dangerous Situation   |
               |                          |                         |
               ------------------------------------------------------
 ```
-
-**Write Less Code:**
-
-There have been studies that have researched the number of bugs you can expect to have in your software. The industry average is around 15 to 50 bugs per 1000 lines of code. One simple way to reduce the number of bugs, and increase the integrity of your software, is to write less code.
-
-Bjarne Stroustrup stated that writing more code than you need results in `Ugly`, `Large` and `Slow` code:
-
-* `Ugly`: Leaves places for bugs to hide.
-* `Large`: Ensures incomplete tests.
-* `Slow`: Encourages the use of shortcuts and dirty tricks.
-
 **Resources:**
 
 [Software Development for Infrastructure](http://www.stroustrup.com/Software-for-infrastructure.pdf) - Bjarne Stroustrup  
@@ -161,41 +172,75 @@ Bjarne Stroustrup stated that writing more code than you need results in `Ugly`,
 [Design Philosophy On Integrity](https://www.goinggo.net/2017/02/design-philosophy-on-integrity.html) - William Kennedy  
 [Ratio of bugs per line of code](https://www.mayerdan.com/ruby/2012/11/11/bugs-per-line-of-code-ratio) - Dan Mayer  
 [Masterminds of Programming](http://dl.acm.org/citation.cfm?id=1592983) - Federico Biancuzzi and Shane Warden  
+[Developing Software The Right Way, with Intent and Carefulness](http://ipengineer.net/2017/04/developing-software-the-right-way-with-intent-and-carefulness) - David Gee  
 
-#### 2) Readability
+---
 
-**_We must structure our systems to be more comprehensible._**  
-**_Readability means reliability._**
+### Readability
+
+**_We must structure our systems to be more comprehensible._**
 
 This is about writing simple code that is easy to read and understand without the need of mental exhaustion. Just as important, it's about not hiding the cost/impact of the code per line, function, package and the overall ecosystem it runs in.
 
-In Go, the underlying machine is the real machine rather than a single abstract machine. The model of computation is that of the computer. Here is the key, Go gives you direct access to the machine while still providing abstraction mechanisms to allow higher-level ideas to be expressed.
-
-**_"A well-designed language has a one-one correlation between source code and object code. It's obvious to the programmer what code will be generated from their source. This provides its own satisfaction, is efficient, and reduces the need for documentation." - Chuck Moore (inventor of Forth)_**
-
-**_"Can you explain it to the median user (developer)? as opposed to will the smartest user (developer) figure it out?" - Peter Weinberger (inventor of AWK)_**
-
 [Example Readability Issue](http://cpp.sh/6i7d)  
 
-#### 3) Simplicity
+**Real Machine**
 
-**_We must understand that simplicity is hard to design and complicated to build._**  
+_"A well-designed language has a one-one correlation between source code and object code. It's obvious to the programmer what code will be generated from their source. This provides its own satisfaction, is efficient, and reduces the need for documentation." - Chuck Moore (inventor of Forth)_
 
-This is about hiding complexity. A lot of care and design must go into simplicity because this can cause more problems then good. It can create issues with readability and it can cause issues with performance. Validate that abstractions are not generalized or even too concise. You might think you are helping the programmer or the code but validate things are still easy to use, understand, debug and maintain.
+In Go, the underlying machine is the real machine rather than a single abstract machine. The model of computation is that of the computer. Here is the key, Go gives you direct access to the machine while still providing abstraction mechanisms to allow higher-level ideas to be expressed.
 
-**_"The simple fact is that complexity will emerge somewhere, if not in the language definition, then in thousands of applications and libraries." - Bjarne Stroustrup (inventor of C++)_**
+**Mental Models**
 
-**_"Everything should be made as simple as possible, but not simpler." - Albert Einstein_**
+_"Let's imagine a project that's going to end up with a million lines of code or more. The probability of those projects being successful in the United States these days is very low - well under 50%. That's debatable. - Tom Love (inventor of Objective C)_
+
+_100k lines of code fit inside a box of paper. - Tom Love (inventor of Objective C)_
+
+How much code in that box do you think you can maintain a mental model of in your head? I believe asking a single developer to maintain a mental model of more than one ream of paper in that box (~10k lines of code) is asking a lot. If you do the math, then it takes a team of 100 people to work on a code base that hits a million lines of code. That is 100 people that need to be coordinated, grouped, tracked and in a constant feedback loop of communication.
+
+**Average Developer**
+
+_"Can you explain it to the median user (developer)? as opposed to will the smartest user (developer) figure it out?" - Peter Weinberger (inventor of AWK)_
+
+You must be aware of who you are on your team. When hiring new people, you must be aware of where they fall. The code must be written for the average developer to comprehend. If you are below average, you have the responsibility to come up to speed. If you are the expert, you have the responsbility to reduce being clever.
+
+---
+
+### Simplicity
+
+**_We must understand that simplicity is hard to design and complicated to build._**
+
+This is about hiding complexity. A lot of care and design must go into simplicity because this can cause more problems then good. It can create issues with readability and it can cause issues with performance.
+
+**Simple, But Not Simpler**
+
+_"Everything should be made as simple as possible, but not simpler." - Albert Einstein_
+
+Focus on encapsulation and validate that you're not generalizing or even being too concise. You might think you are helping the programmer or the code but validate things are still easy to use, understand, debug and maintain.
+
+**Encapsulation**
+
+_Paraphrasing: "Encapsulation and the separation of concerns are drivers for designing software. This is largely based on how other industries handle complexity. There seems to be a human pattern of using encapsulation to wrestle complexity to the ground." - Brad Cox (inventor of Objective C)_
+
+_"The purpose of abstraction is not to be vague, but to create a new semantic level in which one can be absolutely precise - Edsger W. Dijkstra_
+
+Encapsulation is what we have been trying to figure out as an industry for 40 years. Go is taking a slightly new approach with the package. Brining encapsulation up a level and providing richer support at the language level.
 
 **Resources:**
 
 [Simplicity is Complicated](https://www.youtube.com/watch?v=rFejpH_tAHM) - Rob Pike  
 
-#### 4) Performance
+---
+
+### Performance
 
 **_We must compute less to get the results we need._**
 
 This is about not wasting effort and achieving execution efficiency. Writing code that is mechanically sympathetic with the runtime, operating system and hardware. Achieving performance by writing less and more efficient code but staying within the idioms and framework of the language.
+
+_"Programmers waste enormous amounts of time thinking about, or worrying about, the speed of non-critical parts of their programs, and these attempts at efficiency actually have a strong negative impact when debugging and maintenance are considered. We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil. Yet we should not pass up our opportunities in that critical 3%." — Donald E. Knuth_
+
+_"I don't trust anything until it runs... In fact, I don't trust anything until it runs twice." - Andrew Gelman (one of the greatest living statisticians at Columbia University)._
 
 Rules of Performance:   
     * Never guess about performance.  
@@ -205,9 +250,15 @@ Rules of Performance:
 
 [Example Benchmark](https://github.com/ardanlabs/gotraining/blob/master/topics/go/testing/benchmarks/basic/basic_test.go)  
 
-**_"When we're computer programmers we're concentrating on the intricate little fascinating details of programming and we don't take a broad engineering point of view about trying to optimize the total system. You try to optimize the bits and bytes." - Tom Kurtz (inventor of BASIC)_**
+**Broad Engineering**
 
-#### 5) Micro-Optimizations
+_"When we're computer programmers we're concentrating on the intricate little fascinating details of programming and we don't take a broad engineering point of view about trying to optimize the total system. You try to optimize the bits and bytes." - Tom Kurtz (inventor of BASIC)_
+
+Performance is important but it can't be your priority unless the code is not running fast enough. You only know this once you have a working program and you have validated it. We place those who we think know how to write performant code on a pedestal. We need to put those who write code that is optimized for correctness and performs fast enough on those pedestals.
+
+---
+
+### Micro-Optimizations
 
 Micro-Optimizations are about squeezing every ounce of performance as possible. When code is written with this as the priority, it is very difficult to write code that is readable, simple or idiomatic. You are writing clever code that may require the unsafe package or you may need to drop into assembly.
 
@@ -261,16 +312,16 @@ Micro-Optimizations are about squeezing every ounce of performance as possible. 
 
 **Validation:**
 
-Declare an interface when:  
+Use an interface when:  
 * users of the API need to provide an implementation detail.
 * API’s have multiple implementations they need to maintain internally.
 * parts of the API that can change have been identified and require decoupling.
 
-Don't declare an interface:  
+Don't use an interface:  
 * for the sake of using an interface.
 * to generalize an algorithm.
 * when users can declare their own interfaces.
-* if it's not clear how the ineterface makes the code better.
+* if it's not clear how the interface makes the code better.
 
 **Resources:**
 
@@ -287,140 +338,7 @@ Don't declare an interface:
 
 _Package Oriented Design allows a developer to identify where a package belongs inside a Go project and the design guidelines the package must respect. It defines what a Go project is and how a Go project is structured. Finally, it improves communication between team members and promotes clean package design and project architecture that is discussable._
 
-**Language Mechanics:**
-
-* Packaging directly conflicts with how we have been taught to organize source code in other languages.
-* In other languages, packaging is a feature that you can choose to use or ignore.
-* You can think of packaging as applying the idea of microservices on a source tree.
-* All packages are "first class," and the only hierarchy is what you define in the source tree for your project.
-* There needs to be a way to “open” parts of the package to the outside world.
-* Two packages can’t cross-import each other. Imports are a one way street. 
-
-**Design Philosophy:**
-
-* To be purposeful, packages must provide, not contain.
-    * Packages must be named with the intent to describe what it provides.
-    * Packages must not become a dumping ground of disparate concerns.
-* To be usable, packages must be designed with the user as their focus.
-    * Packages must be intuitive and simple to use.
-    * Packages must respect their impact on resources and performance.
-    * Packages must protect the user’s application from cascading changes.
-    * Packages must prevent the need for type assertions to the concrete.
-    * Packages must reduce, minimize and simplify its code base.
-* To be portable, packages must be designed with reusability in mind.
-    * Packages must aspire for the highest level of portability.
-    * Packages must reduce taking on opinions when it’s reasonable and practical.
-    * Packages must not become a single point of dependency.
-
-**Project Structure:**
-
-```
-Kit                     Application
-
-├── CONTRIBUTORS        ├── cmd/
-├── LICENSE             ├── internal/
-├── README.md           │   └── platform/
-├── cfg/                └── vendor/
-├── examples/
-├── log/
-├── pool/
-├── tcp/
-├── timezone/
-├── udp/
-└── web/
-```
-
-* **vendor/**  
-Good documentation for the `vendor/` folder can be found in this Gopher Academy [post](https://blog.gopheracademy.com/advent-2015/vendor-folder) by Daniel Theophanes. For the purpose of this post, all the source code for 3rd party packages need to be vendored (or copied) into the `vendor/` folder. This includes packages that will be used from the company `Kit` project. Consider packages from the `Kit` project as 3rd party packages.
-
-* **cmd/**  
-All the programs this project owns belongs inside the `cmd/` folder. The folders under `cmd/` are always named for each program that will be built. Use the letter `d` at the end of a program folder to denote it as a daemon. Each folder has a matching source code file that contains the `main` package.
-
-* **internal/**  
-Packages that need to be imported by multiple programs within the project belong inside the `internal/` folder. One benefit of using the name `internal/` is that the project gets an extra level of protection from the compiler. No package outside of this project can import packages from inside of `internal/`. These packages are therefore internal to this project only.
-
-* **internal/platform/**  
-Packages that are foundational but specific to the project belong in the `internal/platform/` folder. These would be packages that provide support for things like databases, authentication or even marshaling.
-
-**Validation:**
-
-<u>Validate the location of a package.</u>
-* `Kit`
-    * Packages that provide foundational support for the different `Application` projects that exist.
-    * logging, configuration or web functionality.
-* `cmd/`
-    * Packages that provide support for a specific program that is being built.
-    * startup, shutdown and configuration.
-* `internal/`
-    * Packages that provide support for the different programs the project owns.
-    * CRUD, services or business logic.
-* `internal/platform/`
-    * Packages that provide internal foundational support for the project..
-    * database, authentication or marshaling.
-    
-<u>Validate the dependency choices.</u>
-* `All`
-    * Validate the cost/benefit of each dependency.
-    * Question imports for the sake of sharing existing types.
-    * Question imports to others packages at the same level.
-    * If a package wants to import another package at the same level:
-        * Question the current design choices of these packages.
-        * If reasonable, move the package inside the source tree for the package that wants to import it.
-        * Use the source tree to show the dependency relationships.
-* `internal/`
-    * Packages from these locations CAN’T be imported:
-        * `cmd/`
-* `internal/platform/`
-    * Packages from these locations CAN’T be imported:
-        * `cmd/`
-        * `internal/`
-        
-<u>Validate the opinions being imposed.</u>
-* `Kit`, `internal/platform/`
-    * NOT allowed to have opinions about any application concerns.
-    * NOT allowed to log, but access to trace information must be decoupled.
-    * Configuration and runtime changes must be decoupled.
-    * Retrieving metric and telemetry values must be decoupled.
-* `cmd/`, `internal/`
-    * Allowed to have opinions about any application concerns.
-    * Allowed to log and handle configuration natively.
-    
-<u>Validate how data is accepted/returned.</u>
-* `All`
-    * Validate the consistent use of value/pointer semantics for a given type.
-    * When using an interface type to accept a value, the focus must be on the behavior that is required and not the value itself.
-    * If behavior is not required, use a concrete type.
-    * When reasonable, use an existing type before declaring a new one.
-    * Question types from dependencies that leak into the exported API.
-        * An existing type may no longer be reasonable to use.
-        
-<u>Validate how errors are handled.</u>
-* `All`
-    * Handling an error means:
-        * The error is no longer a concern.
-        * There is no more action that needs to be taken.
-        * It has been logged if necessary.
-* `Kit`
-    * NOT allowed to panic an application.
-    * NOT allowed to wrap errors.
-    * Return only root cause error values.
-* `cmd/`
-    * Allowed to panic an application.
-    * Wrap errors with context if not being handled.
-    * Majority of handling errors happen here.
-* `internal/`
-    * NOT allowed to panic an application.
-    * Wrap errors with context if not being handled.
-    * Minority of handling errors happen here.
-* `internal/platform/`
-    * NOT allowed to panic an application.
-    * NOT allowed to wrap errors.
-    * Return only root cause error values.
-
-**Resources:**
-
-[Design Philosophy on Packaging](https://www.goinggo.net/2017/02/design-philosophy-on-packaging.html)  
-[Package Oriented Design](https://www.goinggo.net/2017/02/package-oriented-design.html)  
+[Learn More](design/packaging)
 
 ---
 
@@ -477,27 +395,25 @@ Channels allow goroutines to communicate with each other through the use of sign
 
 * Use channels to orchestrate and coordinate goroutines.
     * Focus on the signaling semantics and not the sharing of data.
-    * Signal by passing data or by closing the channel.
+    * Signaling with data or without data.
     * Question their use for synchronizing access to shared state.
         * _There are cases where channels can be simpler for this but initially question._
 * Unbuffered channels:
-    * Blocks the sending goroutine from moving forward until a different goroutine has received the data signal.
-        * The sending goroutine gains immediate knowledge their data signal has been received.
-    * Both goroutines involved must be at the channel at the same time.
-        * More important: The Receive happens before the Send.
-    * Trade-offs:
-        * We take the benefit of knowing the data signal has been received for the cost of higher blocking latency.
+    * Receive happens before the Send.
+    * Benefit: 100% guarentee the signal has been received.
+    * Cost: Unknown latency on when the signal will be received.
 * Buffered channels:
-    * Does NOT block the sending goroutine from moving forward until a different goroutine has received the data signal.
-        * The sending goroutine gains no knowledge that their data signal has been received.
-    * Both goroutines involved don't need to be at the channel at the same time.
-        * More important: The Send happens before the Receive.
-    * Trade-offs:
-        * We take the benefit of reducing blocking latency for the cost of not knowing if/when the data signal is received.
+    * Send happens before the Receive.
+    * Benefit: Reduce blocking latency between signaling.
+    * Cost: No guarentee when the signal has been received.
+        * The larger the buffer, the less guarentee.
+        * Buffer of 1 can give you one delayed send of guarentee.
 * Closing channels:
-    * Signaling without the need for data passing.
+    * Close happens before the Receive. (like Buffered)
+    * Signaling without data.
     * Perfect for signaling cancellations and deadlines.
 * NIL channels:
+    * Send and Receive block.
     * Turn off signaling
     * Perfect for rate limiting or short term stoppages.
 
@@ -505,17 +421,15 @@ Channels allow goroutines to communicate with each other through the use of sign
 
 Depending on the problem you are solving, you may require different channel semantics. Depending on the semantics you need, different architectural choices must be taken.
 
-* If any given Send on a channel `CAN` cause the goroutine to block:
-    * You have less buffers compared to the number of goroutines that will perform a Send at any given time.
-    * An example would be a resource pool of database connections.
-    * This requires knowing what happens when the Send blocks because this will create a situation of back pressure inside the application in front of the channel.
-    * The things discussed above about [writing concurrent software](https://github.com/ardanlabs/gotraining/blob/master/reading/design_guidelines.md#writing-concurrent-software) must be taken into account for this channel.
-    * Not knowing what happens when the Send blocks on the channel is not a license to guess but a directive to STOP, understand and take appropriate measures.
-* If any given Send on a channel `WON'T` cause the goroutine to block:
-    * You have a buffer for every goroutine that will perform a Send.
-    * You will abandon the Send immediately if it can't be performed.
-    * An example would be a fan out pattern or pipelining.
-    * This requires knowing if the size of the buffer is appropriate and if it is acceptable to abandon the Send.
+* If any given Send on a channel `CAN` cause the sending goroutine to block:
+    * Not allowed to use a Buffered channel larger than 1.
+        * Buffers larger than 1 must have reason/measurements.
+    * Must know what happens when the sending goroutine blocks.
+* If any given Send on a channel `WON'T` cause the sending goroutine to block:
+    * You have the exact number of buffers for each send.
+        * Fan Out pattern
+    * You have the buffer measured for max capacity.
+        * Drop pattern
 * Less is more with buffers.
     * Don’t think about performance when thinking about buffers.
     * Buffers can help to reduce blocking latency between signaling.
